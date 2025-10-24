@@ -40,14 +40,7 @@ function! s:SetColors(args)
   endif
 endfunction
 
-command! -nargs=* SetColors call s:SetColors('<args>')
 
-" Set next/previous/random (how = 1/-1/0) color from our list of colors.
-" The 'random' index is actually set from the current time in seconds.
-" Global (no 's:') so can easily call from command line.
-function! NextColor(how)
-  call s:NextColor(a:how, 1)
-endfunction
 
 " Helper function for NextColor(), allows echoing of the color name to be
 " disabled.
@@ -72,7 +65,7 @@ function! s:HourColor()
   echo g:colors_name
 endfunction
 
-function! setcolor#NextColor(how, echo_color)
+function! s:NextColor(how, echo_color)
   if len(s:mycolors) == 0
     call s:SetColors('all')
   endif
@@ -107,4 +100,11 @@ function! setcolor#NextColor(how, echo_color)
   if (a:echo_color)
     echo g:colors_name
   endif
+endfunction
+
+" Set next/previous/random (how = 1/-1/0) color from our list of colors.
+" The 'random' index is actually set from the current time in seconds.
+" Global (no 's:') so can easily call from command line.
+function! setcolor#NextColor(how)
+  call s:NextColor(a:how, 1)
 endfunction
